@@ -1,0 +1,101 @@
+# Real Estate Unit Planning Advisor
+
+# --- Market Data ---
+market_data = {
+    "baner": {
+        "recommended_units": ["2 BHK", "3 BHK"],
+        "unit_sizes": {
+            "2 BHK": "750-950 sq.ft",
+            "3 BHK": "1100-1300 sq.ft"
+        },
+        "rate_per_sqft": 15000,
+        "amenities": [
+            "Swimming Pool", "Clubhouse", "Gym",
+            "Kids Play Area", "Multipurpose Hall", "Landscape Garden"
+        ]
+    },
+    "wakad": {
+        "recommended_units": ["1 BHK", "2 BHK"],
+        "unit_sizes": {
+            "1 BHK": "450-600 sq.ft",
+            "2 BHK": "650-850 sq.ft"
+        },
+        "rate_per_sqft": 11000,
+        "amenities": [
+            "Clubhouse", "Gym", "CCTV Surveillance",
+            "Children's Play Area", "Jogging Track"
+        ]
+    },
+    "kharadi": {
+        "recommended_units": ["2 BHK", "3 BHK"],
+        "unit_sizes": {
+            "2 BHK": "700-950 sq.ft",
+            "3 BHK": "1000-1200 sq.ft"
+        },
+        "rate_per_sqft": 14000,
+        "amenities": [
+            "Swimming Pool", "Clubhouse", "Co-working Lounge",
+            "Yoga Room", "Gym", "Kids Play Area"
+        ]
+    },
+    "hadapsar": {
+        "recommended_units": ["1 BHK", "2 BHK"],
+        "unit_sizes": {
+            "1 BHK": "400-550 sq.ft",
+            "2 BHK": "600-850 sq.ft"
+        },
+        "rate_per_sqft": 10500,
+        "amenities": [
+            "Gym", "Community Hall", "Children's Play Area",
+            "Security Cabin", "Intercom Facility"
+        ]
+    },
+    "balewadi": {
+        "recommended_units": ["2 BHK", "3 BHK"],
+        "unit_sizes": {
+            "2 BHK": "750-900 sq.ft",
+            "3 BHK": "1050-1250 sq.ft"
+        },
+        "rate_per_sqft": 14500,
+        "amenities": [
+            "Infinity Pool", "Clubhouse", "Sky Deck",
+            "Fitness Studio", "Multipurpose Court", "Indoor Games Room"
+        ]
+    }
+}
+
+# --- Function to calculate ticket size range ---
+def get_ticket_size_range(rate, size_range):
+    size_range = size_range.replace("sq.ft", "").strip()
+    min_size, max_size = map(int, size_range.split('-'))
+    return rate * min_size, rate * max_size
+
+# --- Main Program ---
+def main():
+    print("🏗️ Real Estate Unit Planning Advisor\n")
+    print("Supported Locations:", ", ".join([loc.title() for loc in market_data.keys()]))
+    location = input("\nEnter your project location (e.g., Baner, Wakad, Kharadi): ").strip().lower()
+
+    if location in market_data:
+        data = market_data[location]
+        print(f"\n📍 Market Insights for: {location.title()}")
+        print("Recommended Unit Types:")
+        for unit in data["recommended_units"]:
+            print(f" - {unit}")
+
+        print("\nTypical Unit Sizes and Ticket Prices:")
+        for unit, size in data["unit_sizes"].items():
+            min_price, max_price = get_ticket_size_range(data["rate_per_sqft"], size)
+            print(f" - {unit}: {size} | ₹{min_price:,} – ₹{max_price:,}")
+
+        print(f"\n💰 Rate per sq.ft: ₹{data['rate_per_sqft']}")
+        print("\n💡 Recommended Amenities:")
+        for amenity in data["amenities"]:
+            print(f" - {amenity}")
+
+    else:
+        print("❌ Sorry, we don't have data for that location. Try one of the supported areas listed above.")
+
+# --- Run the Program ---
+if __name__ == "__main__":
+    main()
